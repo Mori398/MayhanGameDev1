@@ -32,27 +32,87 @@ public class FirstPersonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
         
+        characterController = GetComponent<CharacterController>();
+
+        //Hides the mouse cursor at start
+        Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        grounded = characterController.isGrounded;
+        MovePlayer();
+        Look();
+    }
+
+
+
+    public void MovePlayer()
+    {
+        //direction of movement 
+        Vector3 moveVec = transform.right * moveInput.x + transform.forward * moveInput.y;
+
+        //move controller
+        characterController.Move(moveVec * speed * Time.deltaTime);
+
+        //add gravity
+        playerVelocity.y += gravity * Time.deltaTime;
+
+            if (grounded && playerVelocity.y < 0) {
+
+                  playerVelocity.x = -2.5f;
+            }
+
+        characterController.Move(playerVelocity * Time.deltaTime);
+
+    }
+
+    public void Look()
+    {
+        float xAmount = mouseMovement.x * sensitivity * Time.deltaTime;
+        float yAmount = mouseMovement.y * sensitivity * Time.deltaTime;
+
+        transform.Rotate(Vector3.up * mouseMovement * sensitivity * Time.deltaTime);
+
+        cam_x_rotation -= xAmount;
+        cam_x_rotation = Mathf.Clamp(cam_x_rotation, -90f, 90f);
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
+
+        moveInput = context.ReadValue<Vector2>();
+        Debug.Log("move input value:" + moveInput.ToString());
 
     }
 
     public void Onlook(InputAction.CallbackContext context)
     {
 
+        mouseMovement = context.ReadValue<Vector2>();
+        Debug.Log("Mouse Movement:" + moveInput.ToString());
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
 
+        Jump();
+        Debug.Log("look ma, I jumped");
     }
+
+
+    public void Jump()
+    {
+        if (!grounded)
+        {
+            playerVelocity.y = jump_force;
+        }
+    }
+
+
 }
+
