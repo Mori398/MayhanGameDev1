@@ -73,13 +73,19 @@ public class FirstPersonController : MonoBehaviour
 
     public void Look()
     {
-        float xAmount = mouseMovement.x * sensitivity * Time.deltaTime;
-        float yAmount = mouseMovement.y * sensitivity * Time.deltaTime;
+        float xAmount = mouseMovement.y * sensitivity * Time.deltaTime;
+        float yAmount = mouseMovement.x * sensitivity * Time.deltaTime;
 
-        transform.Rotate(Vector3.up * mouseMovement * sensitivity * Time.deltaTime);
+        transform.Rotate(Vector3.up * mouseMovement.x * sensitivity * Time.deltaTime);
 
         cam_x_rotation -= xAmount;
         cam_x_rotation = Mathf.Clamp(cam_x_rotation, -90f, 90f);
+
+        //set cameras local rotation. player will be able to look up and down
+
+
+        cameraLive.transform.localRotation = Quaternion.Euler(cam_x_rotation, 0, 0);
+
     }
 
     public void OnMove(InputAction.CallbackContext context)

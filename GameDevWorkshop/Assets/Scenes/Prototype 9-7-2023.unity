@@ -343,7 +343,7 @@ MonoBehaviour:
   speed: 2
   gravity: -10
   jump_force: 2
-  cameraLive: {fileID: 0}
+  cameraLive: {fileID: 1875867922}
   sensitivity: 25
 --- !u!114 &476275007
 MonoBehaviour:
@@ -422,7 +422,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1875867922}
 --- !u!143 &476275008
 CharacterController:
   m_ObjectHideFlags: 0
